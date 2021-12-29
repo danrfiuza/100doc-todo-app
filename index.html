@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>TODO App</h1>
+    <section>
+      <form action="" method="post" id="taskForm">
+        <input type="text" name="taskId" disabled id="taskId" style="width: 30px;"/>
+        <br>
+        Type your tasks and habits:
+        <input type="text" name="task" id="task" />
+        <br />
+        Is it done?<input type="checkbox" id="done" />
+        <br />
+        When it will start?
+        <input type="datetime-local" name="date_start" id="date_start" />
+        <br />
+        When it will end?
+        <input type="datetime-local" name="date_end" id="date_end" />
+        <br />
+        <button id="submmit">Hit it! <span>🖱️</span></button>
+        <button type="reset">Clear <span>⌫</span></button>
+      </form>
+    </section>
+    <section>
+      <h2>Habits list</h2>
+      <hr />
+      <div>
+        <ul id="taskList"></ul>
+      </div>
+    </section>
+  </body>
+</html>
+<script>
+  function save(evt) {
+    evt.preventDefault();
+
+    const taskId = Math.random().toString(16).slice(2);
+    const task = document.getElementById("task").value;
+    const done = document.getElementById("done").checked;
+    const dateStart = document.getElementById("date_start").value;
+    const dateEnd = document.getElementById("date_end").value;
+    appendTask(taskId, task, done, dateStart, dateEnd);
+
+    //clear form after save
+    document.getElementById("taskForm").reset();
+  }
+
+  function appendTask(taskId, task, done, dateStart, dateEnd) {
+    const taskList = document.getElementById("taskList");
+
+    const d1 = new Date();
+    const d2 = new Date(dateEnd);
+    const isLate = d1.getTime() > d2.getTime();
+
+    // Task text
+    const text = document.createElement("span");
+    text.innerText = ` ${task} - Starts at ⏰: ${dateStart} | Ends ⏰: ${dateEnd} `;
+    text.style.textDecoration = done == true ? "line-through" : "none";
+
+    // the action button
+    const button = document.createElement("button");
+    button.innerText = "Delete";
+    button.addEventListener("click", () => {
+      li.remove();
+    });
+
+    //The done checkbox
+    const checkBox = document.createElement("input");
+    checkBox.type = "checkbox";
+    checkBox.checked = done;
+    checkBox.addEventListener("change", (e) => {
+      isChecked = e.target.checked;
+      text.style.textDecoration = isChecked == true ? "line-through" : "none";
+    });
+
+    // The list item
+    const li = document.createElement("li");
+    li.id = taskId;
+    if (isLate) {
+      li.style.backgroundColor = "#f78686";
+    }
+
+    li.appendChild(checkBox);
+    li.appendChild(text);
+    li.appendChild(button);
+    li.append(document.createElement("hr"));
+
+    taskList.append(li);
+  }
+  function clear() {}
+  document.getElementById("submmit").addEventListener("click", save);
+</script>
