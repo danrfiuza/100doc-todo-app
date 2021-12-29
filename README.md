@@ -1,5 +1,5 @@
 # 100doc-todo-app
-simple todo app made with vanilla javascript
+Simple todo app made with vanilla javascript
 
 ## Goals:
 
