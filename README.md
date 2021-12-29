@@ -5,5 +5,5 @@ Simple todo app made with vanilla javascript
 
 * Practice vanilla javascript
 * Connect with firebase
-* Practice css
+* Practice CSS
 * Practice HTML
